@@ -1,16 +1,10 @@
-/*
-VARIABLES TO SET:
-export POSTGRES_CONNECT_URL='postgres_full_url'
-
-*/
-
-// load variables from .env
-require('dotenv').config();
+require('dotenv').config({path:__dirname+'/./../.env' })
 
 const _ = require('lodash');
 const uuid = require('uuid');
 
 const { Client } = require('pg');
+console.log(process.env)
 const connectUrl = process.env.POSTGRES_CONNECT_URL
 if (!connectUrl) {
   console.log('please set POSTGRES_CONNECT_URL in .env');
@@ -31,7 +25,7 @@ client.query('SELECT * FROM Funz where id = $1', [3], function (err, result) {
 
 const WebSocket = require('ws');
 
-const wss = new WebSocket.Server({ port: 3000 });
+const wss = new WebSocket.Server({ port: process.env.PORT });
 
 wss.on('connection', (ws, req, _client) => {
   ws.id = uuid.v4();
