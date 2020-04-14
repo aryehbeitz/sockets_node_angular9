@@ -6,7 +6,7 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
   providedIn: 'root'
 })
 export class ChatService {
-  public myWebSocket: WebSocketSubject<any> = webSocket('ws://localhost:3000');
+  public myWebSocket: WebSocketSubject<any> = webSocket('ws://localhost:3000?token=aryeh_token');
 
   constructor() {
     this.myWebSocket.subscribe(message => {

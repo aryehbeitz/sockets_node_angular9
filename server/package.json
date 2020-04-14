@@ -9,9 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/socket.io": "^2.1.4",
-    "express": "^4.17.1",
-    "socket.io": "^2.3.0",
+    "dotenv": "^8.2.0",
+    "lodash": "^4.17.15",
+    "pg": "^8.0.2",
+    "uuid": "^7.0.3",
     "ws": "^7.2.3"
   }
 }
