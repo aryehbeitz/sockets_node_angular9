@@ -8,7 +8,7 @@ import { ChatService } from './chat.service'
 })
 export class AppComponent implements OnInit {
   public newMessage: string;
-  public messageList:  string[] = [];
+  public messageList: string[] = [];
 
   constructor(private chatService: ChatService) {
   }
@@ -19,9 +19,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.chatService.myWebSocket
-    .subscribe(messageObj => {
-      console.log('received', messageObj);
+    this.chatService.myWebSocket.subscribe(messageObj => {
       this.messageList.push(messageObj.message);
     });
   }
