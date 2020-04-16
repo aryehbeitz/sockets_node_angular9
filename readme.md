@@ -33,3 +33,5 @@ chat in each will be echoed in all
 ```
 node-inspect src/index.js
 ```
+
+then open chrome://inspect/#devices

@@ -16,7 +16,7 @@ const client = new Client({
   // ssl: true
 });
 client.connect();
-client.query('SELECT * FROM Funz where id = $1', [3], function (err, result) {
+client.query('SELECT * FROM Funz where id = $1', [3], (err, result) => {
   if (err) {
     console.log(err);
   }
@@ -27,7 +27,7 @@ const WebSocket = require('ws');
 
 const wss = new WebSocket.Server({ port: process.env.PORT });
 
-wss.on('connection', (ws, req, _client) => {
+wss.on('connection', (ws, req) => {
   ws.id = uuid.v4();
   console.log(req.headers.cookie)
   console.log(req.url)
