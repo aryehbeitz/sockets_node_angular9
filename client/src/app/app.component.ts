@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from './chat.service'
+import { retryWhen } from 'rxjs/operators';
+import { tap, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +21,16 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.chatService.myWebSocket.subscribe(messageObj => {
+    this.chatService.myWebSocket.pipe(
+      retryWhen(errors =>
+        errors.pipe(
+          tap(err => {
+            console.error('Got error', err);
+          }),
+          delay(1000)
+        )
+      )
+    ).subscribe(messageObj => {
       this.messageList.push(messageObj.message);
     });
   }

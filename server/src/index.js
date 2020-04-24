@@ -28,11 +28,14 @@ const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: process.env.PORT });
 
 wss.on('connection', (ws, req) => {
+  ws.isAlive = true;
+  ws.on('pong', () => {
+    ws.isAlive = true;
+    console.log('pong ' + ws.id);
+  });
   ws.id = uuid.v4();
-  console.log(req.headers.cookie)
-  console.log(req.url)
-  const ip = req.connection.remoteAddress;
-  console.log(`connection from ${ip}`);
+  ws.data = req.url.split('=').pop();
+  console.log('new connection ' + ws.id + ' ' + req.socket.remoteAddress + ' data: ' + JSON.stringify(JSON.parse(unescape(ws.data)), null, 2));
   ws.on('message', (data) => {
     parsedData = JSON.parse(data);
     console.log(`Received message ${_.get(parsedData, 'message')} from user ${ws.id}`);
@@ -43,6 +46,24 @@ wss.on('connection', (ws, req) => {
       }
     });
   });
+});
+
+const interval = setInterval(function ping() {
+  wss.clients.forEach(function each(ws) {
+    if (ws.isAlive === false) {
+      console.log('terminating connection: ' + ws.id);
+      return ws.terminate();
+    }
+    ws.isAlive = false;
+    ws.ping(() => {
+      console.log('ping ' + ws.id);
+    });
+  });
+}, 10000);
+
+wss.on('close', function close(ws) {
+  console.log('closing connection ' + ws.id)
+  clearInterval(interval);
 });
 
 function baseDbSetup() {
