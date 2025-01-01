@@ -1,4 +1,6 @@
 export class Message {
-  id: string;
-  body: string;
+  constructor(
+    public id: string = '',
+    public body: string = ''
+  ) {}
 }

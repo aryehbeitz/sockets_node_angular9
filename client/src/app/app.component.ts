@@ -9,7 +9,7 @@ import { tap, delay } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public newMessage: string;
+  public newMessage: string = '';
   public messageList: string[] = [];
 
   constructor(private chatService: ChatService) {
