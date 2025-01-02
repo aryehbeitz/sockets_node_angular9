@@ -3,6 +3,12 @@ import { ChatService } from './chat.service'
 import { retryWhen } from 'rxjs/operators';
 import { tap, delay } from 'rxjs/operators';
 
+interface DisplayMessage {
+  message: string;
+  user_id: number;
+  user_uuid: string;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,7 +16,7 @@ import { tap, delay } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
   public newMessage: string = '';
-  public messageList: string[] = [];
+  public messageList: DisplayMessage[] = [];
 
   constructor(private chatService: ChatService) {
   }
@@ -30,8 +36,8 @@ export class AppComponent implements OnInit {
           delay(1000)
         )
       )
-    ).subscribe(messageObj => {
-      this.messageList.push(messageObj.message);
+    ).subscribe((messageObj: DisplayMessage) => {
+      this.messageList.push(messageObj);
     });
   }
 }

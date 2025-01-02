@@ -1,5 +1,8 @@
 <div *ngFor="let message of messageList">
-  {{ message }}
+  <p><strong>User ID:</strong> {{ message.user_id }}</p>
+  <p><strong>UUID:</strong> {{ message.user_uuid }}</p>
+  <p><strong>Message:</strong> {{ message.message }}</p>
+  <hr />
 </div>
 
 <input [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()" />
